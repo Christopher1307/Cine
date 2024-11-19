@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:aapt="http://schemas.android.com/aapt">
+        <vector
+            android:width="200dp"
+            android:height="200dp"
+            android:viewportWidth="100"
+            android:viewportHeight="100"
+            android:autoMirrored="true">
+            <!-- Define tus capas aquí -->
+            <path
+                android:name="circle"
+                android:pathData="M50,10 A40,40 0 1,1 49.9,10 Z"
+                android:fillColor="#FF0000"/>
+        </vector>
+
+        <target android:name="circle">
+            <aapt:attr name="android:animation">
+                <objectAnimator
+                    android:propertyName="rotation"
+                    android:duration="1000"
+                    android:valueFrom="0"
+                    android:valueTo="360"
+                    android:repeatCount="infinite" />
+            </aapt:attr>
+        </target>
+    </animated-vector>
+
+</selector>
