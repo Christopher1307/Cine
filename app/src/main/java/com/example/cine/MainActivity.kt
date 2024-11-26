@@ -1,108 +1,62 @@
 package com.example.cine
 
-import android.animation.ObjectAnimator
+
 import android.os.Bundle
-import android.view.View
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.core.animation.doOnEnd
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.ViewCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.cine.ui.theme.CineTheme
-import kotlinx.coroutines.launch
+import android.widget.Toast
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : ComponentActivity() {
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        setContent {
-            CineTheme {
-                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                val scope = rememberCoroutineScope()
+        // Initialize DrawerLayout and NavigationView
+        drawerLayout = findViewById(R.id.main)
+        navigationView = findViewById(R.id.navigation_view)
 
-                ModalNavigationDrawer(
-                    drawerState = drawerState,
-                    drawerContent = {
-                        ModalDrawerSheet {
-                            Text("Menú", modifier = Modifier.padding(16.dp))
-                            HorizontalDivider()
-                            NavigationDrawerItem(
-                                label = { Text("Inicio") },
-                                selected = false,
-                                onClick = {
-                                    // Aquí puedes manejar la navegación al "Inicio"
-                                    scope.launch { drawerState.close() }
-                                }
-                            )
-                            NavigationDrawerItem(
-                                label = { Text("Preferencias") },
-                                selected = false,
-                                onClick = {
-                                    // Aquí puedes abrir el diálogo de preferencias
-                                    scope.launch { drawerState.close() }
-                                }
-                            )
-                            NavigationDrawerItem(
-                                label = { Text("Acerca de") },
-                                selected = false,
-                                onClick = {
-                                    // Aquí puedes mostrar la información de la app
-                                    scope.launch { drawerState.close() }
-                                }
-                            )
-                        }
-                    }
-                ) {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        floatingActionButton = {
-                            ExtendedFloatingActionButton(
-                                text = { Text("Abrir Menú") },
-                                icon = { Icon(Icons.Filled.Menu, contentDescription = null) },
-                                onClick = {
-                                    scope.launch {
-                                        if (drawerState.isClosed) drawerState.open() else drawerState.close()
-                                    }
-                                }
-                            )
-                        }
-                    ) { innerPadding ->
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                    }
+        // Handle menu selections
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    // Action when "Home" is selected
+                    showToast(getString(R.string.op_home_toast))
+                }
+                R.id.nav_profile -> {
+                    // Action when "Profile" is selected
+                    showToast(getString(R.string.op_profile_toast))
+                }
+                R.id.nav_settings -> {
+                    // Action when "Settings" is selected
+                    showToast(getString(R.string.op_settings_toast))
                 }
             }
+            // Close the drawer after selecting an option
+            drawerLayout.closeDrawers()
+            true
         }
+    }
 
-        val splashScreen = installSplashScreen()
-        splashScreen.setOnExitAnimationListener { splashScreenView ->
-            val fadeOut = ObjectAnimator.ofFloat(splashScreenView.view, View.ALPHA, 1f, 0f)
-            fadeOut.duration = 300L
-            fadeOut.doOnEnd { splashScreenView.remove() }
-            fadeOut.start()
-        }
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
 
