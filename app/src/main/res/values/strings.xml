@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Cine</string>
+    <string name="op_home_toast">Home selected</string>
+    <string name="op_profile_toast">Profile selected</string>
+    <string name="op_settings_toast">Settings selected</string>
+    <string name="op_home_menu">Home</string>
+    <string name="op_profile_menu">Profile</string>
+    <string name="op_settings_menu">Settings</string>
+    <string name="test_content">Test Content</string>
 </resources>

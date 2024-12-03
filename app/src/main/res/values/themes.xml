@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Tema principal de la aplicación -->
-    <style name="Theme.Cine" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Main application theme -->
+    <style name="Theme.Cine" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <!-- Tema para la pantalla de inicio (Splash Screen) -->
+    <!-- Splash Screen theme -->
     <style name="Theme.Cine.Splash" parent="Theme.SplashScreen">
-        <!-- Fondo de la Splash Screen -->
+        <!-- Splash Screen background -->
         <item name="windowSplashScreenBackground">@color/white</item>
 
-        <!-- Ícono animado para la Splash Screen -->
+        <!-- Animated icon for Splash Screen -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/animated_icon</item>
 
-        <!-- Tema que se aplicará después de la Splash Screen -->
+        <!-- Theme applied after Splash Screen -->
         <item name="postSplashScreenTheme">@style/Theme.Cine</item>
     </style>
 
