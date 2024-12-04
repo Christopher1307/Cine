@@ -1,14 +1,15 @@
-package com.example.cine
+package com.example.cine.Activitys
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
@@ -16,50 +17,71 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import com.example.cine.api.AuthInterceptor
+import com.example.cine.api.Movie
+import com.example.cine.api.MovieApiService
+import com.example.cine.api.MovieResponse
 import com.example.cine.ui.theme.CineTheme
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor())
+            .build()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val movieApiService = retrofit.create(MovieApiService::class.java)
+
+        // Estado para almacenar las películas
+        val movies = mutableStateOf<List<Movie>>(emptyList())
+
+        // Llamada a la API
+        movieApiService.getPopularMovies().enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if (response.isSuccessful) {
+                    movies.value = (response.body()?.results ?: emptyList()) as List<Movie>
+                }
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                Log.e("API", "Error: ${t.message}", t)
+                Toast.makeText(this@MainActivity, "Failed to load movies", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // Configuración de la pantalla principal
         setContent {
             CineTheme {
-                MainScreen()
+                MainScreen(movies = movies.value)
             }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
-                true
-            }
-            R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(movies: List<Movie>) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val openDialog = remember { mutableStateOf(false) }
     val openAboutDialog = remember { mutableStateOf(false) }
-    val themeOptions = listOf("Light", "Dark", "System")
-    var selectedTheme by remember { mutableStateOf(themeOptions[2]) }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -118,28 +140,15 @@ fun MainScreen() {
                 )
             }
         ) { contentPadding ->
-            // Screen content
-            Text("Main Content", modifier = Modifier.padding(contentPadding))
+            MovieList(movies = movies, modifier = Modifier.padding(contentPadding))
         }
     }
 
+    // Diálogo de selección de tema
     if (openDialog.value) {
         AlertDialog(
             onDismissRequest = { openDialog.value = false },
-            title = { Text("Select Theme") },
-            text = {
-                Column {
-                    themeOptions.forEach { theme ->
-                        Row {
-                            RadioButton(
-                                selected = (theme == selectedTheme),
-                                onClick = { selectedTheme = theme }
-                            )
-                            Text(theme, modifier = Modifier.padding(start = 8.dp))
-                        }
-                    }
-                }
-            },
+            title = { Text("User Preferences") },
             confirmButton = {
                 TextButton(onClick = { openDialog.value = false }) {
                     Text("OK")
@@ -148,6 +157,7 @@ fun MainScreen() {
         )
     }
 
+    // Diálogo de información
     if (openAboutDialog.value) {
         AlertDialog(
             onDismissRequest = { openAboutDialog.value = false },
@@ -162,10 +172,32 @@ fun MainScreen() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun MainScreenPreview() {
-    CineTheme {
-        MainScreen()
+fun MovieList(movies: List<Movie>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(movies) { movie ->
+            MovieItem(movie = movie) {
+                // Acción al hacer clic en un elemento
+            }
+        }
+    }
+}
+
+@Composable
+fun MovieItem(movie: Movie, onClick: (Movie) -> Unit) {
+    Row(
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable { onClick(movie) }
+    ) {
+        AsyncImage(
+            model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
+            contentDescription = null,
+            modifier = Modifier.size(64.dp)
+        )
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(movie.title)
+            Text(movie.overview)
+        }
     }
 }
