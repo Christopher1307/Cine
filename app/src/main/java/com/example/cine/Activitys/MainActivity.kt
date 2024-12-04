@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         movieApiService.getPopularMovies().enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if (response.isSuccessful) {
-                    movies.value = (response.body()?.results ?: emptyList()) as List<Movie>
+                    movies.value = response.body()?.results ?: emptyList()
                 }
             }
 
