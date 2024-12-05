@@ -16,7 +16,9 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.cine.api.AuthInterceptor
@@ -171,33 +173,41 @@ fun MainScreen(movies: List<Movie>) {
         )
     }
 }
-
 @Composable
 fun MovieList(movies: List<Movie>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(movies) { movie ->
-            MovieItem(movie = movie) {
-                // Acción al hacer clic en un elemento
-            }
+            MovieItem(movie = movie)
         }
     }
 }
 
 @Composable
-fun MovieItem(movie: Movie, onClick: (Movie) -> Unit) {
+fun MovieItem(movie: Movie) {
+    val context = LocalContext.current
+
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
+            .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick(movie) }
+            .clickable {
+                val intent = Intent(context, DetailActivity::class.java).apply {
+                    putExtra("movie", movie)
+                }
+                context.startActivity(intent)
+            }
     ) {
         AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
             contentDescription = null,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(128.dp)
         )
-        Column(modifier = Modifier.padding(start = 8.dp)) {
-            Text(movie.title)
-            Text(movie.overview)
-        }
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = movie.title,
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.weight(1f)
+        )
     }
 }

@@ -17,6 +17,13 @@ class DetailActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.detail_title).text = movie?.title
         findViewById<TextView>(R.id.detail_description).text = movie?.overview
-        findViewById<ImageView>(R.id.detail_image).load("https://image.tmdb.org/t/p/w500${movie?.poster_path}")
+        findViewById<ImageView>(R.id.detail_image).apply {
+            load("https://image.tmdb.org/t/p/w500${movie?.poster_path}") {
+                crossfade(true)
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_error)
+            }
+            scaleType = ImageView.ScaleType.FIT_CENTER
+        }
     }
 }
