@@ -1,0 +1,7 @@
+<!-- res/values-night/colors.xml -->
+<resources>
+    <color name="colorPrimaryDark">#BB86FC</color>
+    <color name="colorPrimaryDarker">#3700B3</color>
+    <color name="colorAccentDark">#03DAC5</color>
+    <color name="backgroundDark">#121212</color>
+</resources>

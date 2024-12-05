@@ -2,16 +2,16 @@
 
     <!-- Main application theme -->
     <style name="Theme.Cine" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
     </style>
 
     <!-- Splash Screen theme -->
     <style name="Theme.Cine.Splash" parent="Theme.SplashScreen">
         <!-- Splash Screen background -->
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@android:color/black</item>
 
         <!-- Animated icon for Splash Screen -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/animated_icon</item>
