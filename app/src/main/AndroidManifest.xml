@@ -30,6 +30,8 @@
         <activity android:name=".Activitys.ProfileActivity" />
         <activity android:name=".Activitys.SettingsActivity" />
         <activity android:name=".Activitys.DetailActivity" />
+        <activity android:name=".Activitys.ReservationFormActivity" />
+        <activity android:name=".Activitys.ReservationListActivity" />
 
     </application>
 

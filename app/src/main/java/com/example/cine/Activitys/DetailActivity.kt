@@ -1,6 +1,8 @@
 package com.example.cine.Activitys
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -25,5 +27,11 @@ class DetailActivity : AppCompatActivity() {
             }
             scaleType = ImageView.ScaleType.FIT_CENTER
         }
+        // Navigate to ReservationFormActivity
+        findViewById<Button>(R.id.reserveButton).setOnClickListener {
+            val intent = Intent(this, ReservationFormActivity::class.java)
+            startActivity(intent)
+        }
     }
+
 }
