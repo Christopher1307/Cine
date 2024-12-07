@@ -2,25 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_profile"
-        android:title="Profile"
-        android:icon="@drawable/ic_profile"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_settings"
         android:title="Settings"
         android:icon="@drawable/ic_settings"
-        app:showAsAction="ifRoom">
-        <menu>
-            <item
-                android:id="@+id/nav_light_theme"
-                android:title="Light Theme" />
-            <item
-                android:id="@+id/nav_dark_theme"
-                android:title="Dark Theme" />
-        </menu>
-    </item>
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_light_theme"
+        android:title="Light Theme"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/nav_dark_theme"
+        android:title="Dark Theme"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/nav_exit"
