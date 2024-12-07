@@ -2,6 +2,7 @@ package com.example.cine.Activitys
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -19,6 +20,7 @@ class ReservationFormActivity : AppCompatActivity() {
     private lateinit var surnameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var dobEditText: EditText
+    private lateinit var movieTitleEditText: EditText
     private lateinit var submitButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,7 @@ class ReservationFormActivity : AppCompatActivity() {
         surnameEditText = findViewById(R.id.surnameEditText)
         emailEditText = findViewById(R.id.emailEditText)
         dobEditText = findViewById(R.id.dobEditText)
+        movieTitleEditText = findViewById(R.id.movieTitleEditText)
         submitButton = findViewById(R.id.submitButton)
 
         dateEditText.setOnClickListener { showDatePickerDialog(dateEditText) }
@@ -39,7 +42,7 @@ class ReservationFormActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             if (validateFields()) {
-                // Save reservation and navigate to ReservationListActivity
+                saveReservation()
                 val intent = Intent(this, ReservationListActivity::class.java)
                 startActivity(intent)
             } else {
@@ -77,6 +80,22 @@ class ReservationFormActivity : AppCompatActivity() {
                 nameEditText.text.isNotEmpty() &&
                 surnameEditText.text.isNotEmpty() &&
                 emailEditText.text.isNotEmpty() &&
-                dobEditText.text.isNotEmpty()
+                dobEditText.text.isNotEmpty() &&
+                movieTitleEditText.text.isNotEmpty()
+    }
+
+    private fun saveReservation() {
+        val sharedPreferences = getSharedPreferences("reservations", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val reservationId = UUID.randomUUID().toString()
+
+        editor.putString("${reservationId}_date", dateEditText.text.toString())
+        editor.putString("${reservationId}_time", timeEditText.text.toString())
+        editor.putString("${reservationId}_name", nameEditText.text.toString())
+        editor.putString("${reservationId}_surname", surnameEditText.text.toString())
+        editor.putString("${reservationId}_email", emailEditText.text.toString())
+        editor.putString("${reservationId}_dob", dobEditText.text.toString())
+        editor.putString("${reservationId}_movieTitle", movieTitleEditText.text.toString())
+        editor.apply()
     }
 }

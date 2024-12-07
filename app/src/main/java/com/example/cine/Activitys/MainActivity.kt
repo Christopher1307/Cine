@@ -84,7 +84,11 @@ class MainActivity : AppCompatActivity() {
                 MainScreen(
                     movies = movies.value,
                     onThemeChange = { isDark -> setTheme(isDark) },
-                    onExit = { finish() }
+                    onExit = { finish() },
+                    onReservationsClick = {
+                        val intent = Intent(this, ReservationListActivity::class.java)
+                        startActivity(intent)
+                    }
                 )
             }
         }
@@ -105,7 +109,8 @@ class MainActivity : AppCompatActivity() {
 fun MainScreen(
     movies: List<Movie>,
     onThemeChange: (Boolean) -> Unit,
-    onExit: () -> Unit
+    onExit: () -> Unit,
+    onReservationsClick: () -> Unit
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -131,6 +136,14 @@ fun MainScreen(
                     selected = false,
                     onClick = {
                         onThemeChange(true)
+                        scope.launch { drawerState.close() }
+                    }
+                )
+                NavigationDrawerItem(
+                    label = { Text("Reservations") },
+                    selected = false,
+                    onClick = {
+                        onReservationsClick()
                         scope.launch { drawerState.close() }
                     }
                 )

@@ -1,5 +1,6 @@
 package com.example.cine.Activitys
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,18 @@ class ReservationListActivity : AppCompatActivity() {
     }
 
     private fun getReservations(): List<Reservation> {
-        // Retrieve reservations from storage or database
-        return listOf()
+        val sharedPreferences = getSharedPreferences("reservations", Context.MODE_PRIVATE)
+        val reservations = mutableListOf<Reservation>()
+
+        sharedPreferences.all.forEach { (key, value) ->
+            if (key.endsWith("_date")) {
+                val reservationId = key.removeSuffix("_date")
+                val date = value as String
+                val time = sharedPreferences.getString("${reservationId}_time", "") ?: ""
+                reservations.add(Reservation(date, time))
+            }
+        }
+
+        return reservations
     }
 }
