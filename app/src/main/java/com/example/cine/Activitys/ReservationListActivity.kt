@@ -39,7 +39,8 @@ class ReservationListActivity : AppCompatActivity() {
                 val reservationId = key.removeSuffix("_date")
                 val date = value as String
                 val time = sharedPreferences.getString("${reservationId}_time", "") ?: ""
-                reservations.add(Reservation(date, time))
+                val movieTitle = sharedPreferences.getString("${reservationId}_movieTitle", "") ?: ""
+                reservations.add(Reservation(date, time, movieTitle))
             }
         }
 

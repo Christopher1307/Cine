@@ -10,6 +10,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cine.R
+import com.example.cine.api.MovieApiService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.awaitResponse
 import java.util.*
 
 class ReservationFormActivity : AppCompatActivity() {
@@ -27,6 +35,7 @@ class ReservationFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation_form)
 
+        // Vincular vistas
         dateEditText = findViewById(R.id.dateEditText)
         timeEditText = findViewById(R.id.timeEditText)
         nameEditText = findViewById(R.id.nameEditText)
@@ -36,9 +45,13 @@ class ReservationFormActivity : AppCompatActivity() {
         movieTitleEditText = findViewById(R.id.movieTitleEditText)
         submitButton = findViewById(R.id.submitButton)
 
+        // Configurar eventos
         dateEditText.setOnClickListener { showDatePickerDialog(dateEditText) }
         timeEditText.setOnClickListener { showTimePickerDialog() }
         dobEditText.setOnClickListener { showDatePickerDialog(dobEditText) }
+
+        // Cargar detalles de la película
+        fetchMovieDetails()
 
         submitButton.setOnClickListener {
             if (validateFields()) {
@@ -97,5 +110,27 @@ class ReservationFormActivity : AppCompatActivity() {
         editor.putString("${reservationId}_dob", dobEditText.text.toString())
         editor.putString("${reservationId}_movieTitle", movieTitleEditText.text.toString())
         editor.apply()
+    }
+
+    private fun fetchMovieDetails() {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val movieApiService = retrofit.create(MovieApiService::class.java)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = movieApiService.getPopularMovies().awaitResponse()
+            if (response.isSuccessful) {
+                val movies = response.body()?.results ?: emptyList()
+                if (movies.isNotEmpty()) {
+                    val movie = movies[0] // Primera película
+                    withContext(Dispatchers.Main) {
+                        movieTitleEditText.setText(movie.title)
+                    }
+                }
+            }
+        }
     }
 }

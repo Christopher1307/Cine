@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cine.R
 
-data class Reservation(val date: String, val time: String)
+data class Reservation(val date: String, val time: String, val movieTitle: String)
 
 class ReservationAdapter(private val reservations: List<Reservation>) :
     RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
@@ -21,6 +21,7 @@ class ReservationAdapter(private val reservations: List<Reservation>) :
         val reservation = reservations[position]
         holder.dateTextView.text = reservation.date
         holder.timeTextView.text = reservation.time
+        holder.movieTitleTextView.text = reservation.movieTitle
     }
 
     override fun getItemCount(): Int = reservations.size
@@ -28,5 +29,6 @@ class ReservationAdapter(private val reservations: List<Reservation>) :
     class ReservationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dateTextView: TextView = itemView.findViewById(R.id.dateTextView)
         val timeTextView: TextView = itemView.findViewById(R.id.timeTextView)
+        val movieTitleTextView: TextView = itemView.findViewById(R.id.movieTitleTextView)
     }
 }
