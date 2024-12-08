@@ -1,60 +1,73 @@
 Cine App
 Descripción
-Cine App es una aplicación móvil para explorar películas populares, ver detalles de películas, y realizar reservas. La aplicación soporta temas claros y oscuros y está construida utilizando Android Jetpack Compose y Retrofit para llamadas a la API.  
+Cine App es una aplicación móvil diseñada para explorar películas populares, obtener información detallada sobre cada película y realizar reservas de manera rápida y sencilla. La aplicación incluye soporte para temas claros y oscuros, aprovechando las capacidades de Android Jetpack Compose para la interfaz de usuario y Retrofit para la comunicación con la API de películas.
+
 Funcionalidades
-Explorar películas populares: Ver una lista de películas populares obtenidas de una API.
-Ver detalles de películas: Ver información detallada de una película seleccionada.
-Realizar reservas: Completar un formulario para reservar una película.
-Ver reservas: Ver una lista de todas las reservas realizadas.
-Perfil de usuario: Ver y editar la información del perfil del usuario.
-Configuración: Cambiar la configuración de la aplicación, incluyendo el tema.
+Explorar películas populares: Consulta una lista de las películas más populares disponibles.
+Detalles de películas: Accede a información completa sobre una película seleccionada, incluyendo su título, descripción e imagen.
+Realizar reservas: Llena un formulario con detalles personales para reservar una película.
+Ver reservas: Consulta una lista de todas las reservas realizadas previamente.
+Perfil de usuario: Visualiza y edita la información del perfil del usuario.
+Configuración: Cambia las preferencias de la aplicación, como el tema visual (claro u oscuro).
 Instalación
 Clona el repositorio:
-git clone https://github.com/Christopher1307/cine-app.git
+bash
+Copiar código
+git clone https://github.com/Christopher1307/cine-app.git  
 Abre el proyecto en Android Studio.
 Sincroniza el proyecto con Gradle.
-Ejecuta la aplicación en un emulador o dispositivo físico.
+Ejecuta la aplicación en un emulador o en un dispositivo físico.
 Uso
 MainActivity
-Función principal: Es la actividad principal que se ejecuta al iniciar la aplicación.
-Configuración de tema: Lee las preferencias del usuario para aplicar el tema claro u oscuro.
-Configuración de la API: Configura el cliente de Retrofit para realizar llamadas a la API de películas.
-Interfaz de usuario: Utiliza Jetpack Compose para renderizar la lista de películas populares y un menú de navegación.
+Función principal: Actividad inicial de la aplicación.
+Configuración de tema: Detecta las preferencias del usuario para aplicar un tema claro u oscuro.
+Configuración de API: Configura el cliente Retrofit para las llamadas a la API de películas.
+Interfaz de usuario: Renderiza la lista de películas populares usando Jetpack Compose y un menú de navegación.
 DetailActivity
 Función principal: Muestra los detalles de una película seleccionada.
-Carga de datos: Recibe un objeto Movie a través de un Intent y muestra su título, descripción e imagen.
-Navegación: Incluye un botón para navegar a la actividad de formulario de reserva (ReservationFormActivity).
+Carga de datos: Recibe un objeto Movie mediante un Intent y muestra el título, descripción e imagen de la película.
+Navegación: Incluye un botón para acceder al formulario de reserva (ReservationFormActivity).
 ReservationFormActivity
-Función principal: Permite al usuario ingresar detalles para reservar una película.
-Interfaz de usuario: Incluye campos de texto para la fecha, hora, nombre, apellidos, correo electrónico, fecha de nacimiento y título de la película.
-Eventos: Configura diálogos para seleccionar la fecha y hora.
-Guardar reserva: Guarda los detalles de la reserva en SharedPreferences.
+Función principal: Permite al usuario ingresar datos para reservar una película.
+Interfaz de usuario: Incluye campos de texto para:
+Fecha
+Hora
+Nombre y apellidos
+Correo electrónico
+Fecha de nacimiento
+Título de la película
+Eventos interactivos: Ofrece selectores para la fecha y hora.
+Guardar reserva: Almacena los datos ingresados en SharedPreferences.
 ReservationListActivity
 Función principal: Muestra una lista de todas las reservas realizadas.
-Interfaz de usuario: Utiliza un RecyclerView para mostrar las reservas.
-Navegación: Incluye un botón flotante para navegar a la actividad de formulario de reserva (ReservationFormActivity).
+Interfaz de usuario: Usa un RecyclerView para listar las reservas.
+Navegación: Incluye un botón flotante para crear una nueva reserva a través de ReservationFormActivity.
 ProfileActivity
-Función principal: Muestra la información del perfil del usuario.
-Interfaz de usuario: Incluye una barra de herramientas con la opción de regresar a la actividad anterior.
+Función principal: Muestra y permite editar la información del perfil del usuario.
+Interfaz de usuario: Incluye una barra de herramientas con opciones de navegación.
 SettingsActivity
-Función principal: Permite al usuario cambiar la configuración de la aplicación.
-Interfaz de usuario: Incluye una barra de herramientas con la opción de regresar a la actividad anterior.
+Función principal: Permite al usuario modificar la configuración de la aplicación, como el tema visual.
+Interfaz de usuario: Incluye una barra de herramientas con opciones para regresar a la actividad anterior.
 Clases Adicionales
 ReservationAdapter
 Función principal: Adaptador para el RecyclerView en ReservationListActivity.
-Vinculación de datos: Vincula los datos de cada reserva a las vistas correspondientes en el RecyclerView.
+Vinculación de datos: Relaciona los datos de cada reserva con las vistas del RecyclerView.
 AuthInterceptor
-Función principal: Interceptor de autenticación para agregar el token de autorización a las solicitudes de la API.
+Función principal: Agrega el token de autorización a las solicitudes de la API de películas.
 Movie
 Función principal: Clase de datos que representa una película.
-Parcelabilidad: Implementa Parcelable para permitir que los objetos Movie se pasen entre actividades.
+Parcelabilidad: Implementa Parcelable para transferir objetos Movie entre actividades.
 MovieApiService
-Función principal: Interfaz de Retrofit para definir las llamadas a la API de películas.
-Métodos: Incluye un método para obtener las películas populares.
+Función principal: Define las llamadas a la API de películas usando Retrofit.
+Métodos: Incluye un método para obtener películas populares.
 MovieResponse
-Función principal: Clase de datos que representa la respuesta de la API de películas.
+Función principal: Clase de datos para manejar la respuesta de la API de películas.
 Atributos: Contiene una lista de objetos Movie.
 Contribuciones
-Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para discutir cualquier cambio que te gustaría hacer.  
+Las contribuciones son bienvenidas. Si tienes una idea para mejorar la aplicación:
+
+Abre un issue para discutir tus ideas.
+Realiza un fork del repositorio.
+Envía un pull request con tus cambios propuestos.
 Licencia
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
