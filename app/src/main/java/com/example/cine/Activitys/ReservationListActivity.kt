@@ -18,6 +18,7 @@ class ReservationListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservation_list)
 
+        // Configurar RecyclerView y FloatingActionButton
         recyclerView = findViewById(R.id.recyclerView)
         fab = findViewById(R.id.fab)
 
