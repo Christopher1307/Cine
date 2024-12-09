@@ -8,7 +8,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Día Reserva">
+        android:hint="@string/d_a_reserva">
         <EditText
             android:id="@+id/dateEditText"
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hora Reserva">
+        android:hint="@string/hora_reserva">
         <EditText
             android:id="@+id/timeEditText"
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre">
+        android:hint="@string/nombre">
         <EditText
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Apellidos">
+        android:hint="@string/apellidos">
         <EditText
             android:id="@+id/surnameEditText"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo electrónico">
+        android:hint="@string/correo_electr_nico">
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fecha de nacimiento">
+        android:hint="@string/fecha_de_nacimiento">
         <EditText
             android:id="@+id/dobEditText"
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Título de la película">
+        android:hint="@string/t_tulo_de_la_pel_cula">
         <EditText
             android:id="@+id/movieTitleEditText"
             android:layout_width="match_parent"
@@ -82,5 +82,5 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enviar" />
+        android:text="@string/enviar" />
 </LinearLayout>

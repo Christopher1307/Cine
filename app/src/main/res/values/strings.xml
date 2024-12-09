@@ -7,4 +7,16 @@
     <string name="op_profile_menu">Profile</string>
     <string name="op_settings_menu">Settings</string>
     <string name="test_content">Test Content</string>
+    <string name="d_a_reserva">Día Reserva</string>
+    <string name="hora_reserva">Hora Reserva</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="fecha_de_nacimiento">Fecha de nacimiento</string>
+    <string name="t_tulo_de_la_pel_cula">Título de la película</string>
+    <string name="enviar">Enviar</string>
+    <string name="reserve">Reserve</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>
